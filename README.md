@@ -6,7 +6,7 @@ So you need to renew them everery three monthes. Ouch
 
 Here a way to automate it.
 
-1) Edit script to add your domains that you want to renew certificates
+1) Edit script
 vi /PathToLetsencrypt/letsencrypt/cron.sh
 
 2) Configure LETSENCRYPT variable with your path for letsencrypt-auto script:
