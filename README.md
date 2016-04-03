@@ -6,16 +6,16 @@ So you need to renew them everery three monthes. Ouch
 
 Here a way to automate it.
 
-1) Configure config file
-nano /PathToLetsencrypt/letsencrypt/cli.ini
+1) Edit script to add your domains that you want to renew certificates
+vi /PathToLetsencrypt/letsencrypt/cron.sh
 
-2) Edit script to add your domains that you want to renew certificates
-nano /PathToLetsencrypt/letsencrypt/cron.sh
+2) Configure LETSENCRYPT variable with your path for letsencrypt-auto script:
+LETSENCRYPT="/path/to/letsencrypt-auto"
 
 3) Don't forget to make it executable
 chmod +x /PathToLetsencrypt/letsencrypt/cron.sh
 
 4) Cron exemple: 15 Jan, 15 April, 15 July, 15 Oct 
 
-"* * 15 4,7,10,1 * /PathToLetsencrypt/letsencrypt/cron.sh >> /PathToLetsencrypt/letsencrypt/cron.log"
+"* * 15 4,7,10,1 * /PathToLetsencrypt/letsencrypt/cron.sh >> /var/log/letsencrypt/cron.log"
 
