@@ -1,7 +1,6 @@
 #!/bin/bash
 
-LETSENCRYPT_DIRECTORY=">/PathToLetsencrypt/letsencrypt/"
-CONFIG_PATH=">/PathToLetsencrypt/letsencrypt/cli.ini"
+LETSENCRYPT="/path/to/letsencrypt-auto"
 
 echo "
 ################
@@ -10,32 +9,14 @@ echo "
 # We display date
 date
 
-cd $LETSENCRYPT_DIRECTORY
+cd $LETSENCRYPT
 
-#array domains
-declare -A DOMAINS
-#you can add more elements
-DOMAINS["MYDOMAIN.TLD"]="/home/MYDOMAIN.TLD/public_html/"
-DOMAINS["MYDOMAIN2.TLD"]="/home/MYDOMAIN2.TLD/public_html/"
-
-for i in "${!DOMAINS[@]}"
-do
-	#domain name
-	domain=$i
-	#domain path
-	path=${DOMAINS[$domain]};
-
-	echo -e "\nDomain $i : \n############################################"
-	#display command before to register cron
-	#echo "sudo -H ../letsencrypt-auto --config ${CONFIG_PATH} -d ${domain} --authenticator webroot --webroot-path ${path} certonly";
-	#run command sudo 
-	result=$(sudo -H ./letsencrypt-auto --config ${CONFIG_PATH} -d ${domain} --authenticator webroot --webroot-path ${path} certonly)
-	echo "${result}"
-done
-
-echo "Reload Apache"
-/etc/init.d/apache2 reload
-
-# We display date
-echo "End of script"
-date
+if !LETSENCRYPT renew > /var/log/letsencrypt/renew.log 2>&1 ; then
+    echo Automated renewal failed:
+    cat /var/log/letsencrypt/renew.log
+    exit 1
+fi
+echo "
+################
+# Script End   #
+################"
